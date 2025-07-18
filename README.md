@@ -1,158 +1,129 @@
-# EquiPay - Expense Sharing Application
+# Split App - Expense Splitting Application
 
-EquiPay is Fullstack solution for managing shared expenses among friends or groups. It helps track who owes what to whom and simplifies settling up.
+A fullstack application designed to help groups of people split expenses fairly and calculate settlements. This project was built to handle common scenarios like splitting dinner costs, utility bills, or travel expenses.
+
+## Table of Contents
+- [Live Demo](#live-demo)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Setup and Installation](#setup-and-installation)
+- [API Endpoints](#api-endpoints)
+- [Postman Collection](#postman-collection)
+
+## Live Demo
+
+- **Frontend Application**: [https://equipay-production.up.railway.app](https://equipay-production.up.railway.app)
+- **Backend API**: [https://equipay-production.up.railway.app/api](https://equipay-production.up.railway.app/api)
 
 ## Features
 
-- Create and manage expenses
-- Track balances between users
-- Generate settlements
-- Support for different split methods (EQUAL, EXACT, PERCENTAGE)
-- User management
+- **User Management**: Users are automatically created when mentioned in an expense
+- **Expense Tracking**: Add, view, and delete expenses with complete details
+- **Flexible Splitting Options**:
+  - **Equal**: Split the cost equally among all participants
+  - **Exact**: Specify the exact amount each person owes
+  - **Percentage**: Split the cost based on custom percentages
+- **Real-time Balance Calculation**: View who owes money and who is owed money
+- **Simplified Settlements**: Calculates minimum transactions to settle all debts
+- **Data Validation**: Robust backend validation with clear error messages
 
 ## Tech Stack
 
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
+### Backend
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: MongoDB (with Mongoose ODM)
+- **Language**: JavaScript (ES Modules)
 
-## Prerequisites
+### Frontend
+- **Library**: React (with Vite)
+- **Styling**: CSS3
+- **Language**: JavaScript (JSX)
 
-- Node.js (v14 or higher)
-- npm or yarn
-- MongoDB Atlas account or local MongoDB instance
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/codedthoughts/EquiPay.git
-   cd EquiPay
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Create a `.env` file in the root directory with the following variables:
-   ```
-   PORT=3000
-   MONGO_URL=your_mongodb_connection_string
-   ```
-
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-   Or for production:
-   ```bash
-   npm start
-   ```
-
-## API Documentation
-
-### Base URL
-`http://localhost:3000`
-
-### Users
-
-#### Get All Users
-```
-GET /users
-```
-
-#### Add a New User
-```
-POST /users
-Body: {
-    "name": "John Doe"
-}
-```
-
-### Expenses
-
-#### Get All Expenses
-```
-GET /api/expenses
-```
-
-#### Add a New Expense
-```
-POST /api/expenses
-Body: {
-    "description": "Dinner",
-    "amount": 100,
-    "paid_by_name": "John",
-    "split_method": "EQUAL",
-    "participants": ["John", "Jane", "Bob"],
-    "splits": [
-        {"user": "John", "amountOwed": 33.33},
-        {"user": "Jane", "amountOwed": 33.33},
-        {"user": "Bob", "amountOwed": 33.34}
-    ]
-}
-```
-
-#### Get Expense by ID
-```
-GET /api/expenses/:id
-```
-
-#### Delete Expense
-```
-DELETE /api/expenses/:id
-```
-
-### Settlements
-
-#### Get Balances
-```
-GET /api/balances
-```
-
-#### Get Settlements
-```
-GET /api/settlements
-```
-
-## Environment Variables
-
-- `PORT` - Port on which the server will run (default: 3000)
-- `MONGO_URL` - MongoDB connection string
+### Deployment & Tooling
+- **Backend Hosting**: Render.com
+- **Frontend Hosting**: Vercel / Netlify / Render.com
+- **API Testing**: Postman
 
 ## Project Structure
 
 ```
-src/
-  ├── config/           # Configuration files
-  │   └── db.js        # Database connection
-  ├── controllers/      # Route controllers
-  ├── models/          # Database models
-  └── routes/          # Route definitions
-  └── index.js         # Application entry point
+/split-app-assignment/
+|
+|-- /backend/
+|   |-- /controllers/     # Business logic for routes
+|   |-- /models/          # Mongoose data schemas (User, Expense)
+|   |-- /routes/          # API route definitions
+|   |-- .env              # Environment variables
+|   |-- index.js          # Main server entry point
+|   |-- package.json
+|
+|-- /frontend/
+|   |-- /src/
+|   |   |-- /components/  # Reusable React components
+|   |   |-- /services/    # API communication logic
+|   |   |-- App.jsx       # Main application component
+|   |   |-- index.css     # Global styles
+|   |-- package.json
+|
+|-- README.md
 ```
 
-## Error Handling
+## Setup and Installation
 
-All error responses follow this format:
-```json
-{
-    "success": false,
-    "message": "Error message"
-}
-```
+### 1. Backend Setup
 
-## Contributing
+1. Navigate to the backend directory and install dependencies:
+   ```bash
+   cd backend
+   npm install
+   ```
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Create a `.env` file in the backend directory:
+   ```env
+   PORT=3001
+   MONGO_URI=mongodb+srv://<user>:<password>@your-cluster-url...
+   ```
+   > Replace `MONGO_URI` with your MongoDB Atlas connection string.
 
-## License
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   The backend API will be available at `http://localhost:3001`
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### 2. Frontend Setup
+
+1. Navigate to the frontend directory and install dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   The frontend will be available at `http://localhost:5173`
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST   | `/users` | Creates a new user |
+| GET    | `/users` | Retrieves all users |
+| POST   | `/expenses` | Adds a new expense |
+| GET    | `/expenses` | Retrieves all expenses |
+| DELETE | `/expenses/:id` | Deletes a specific expense |
+| GET    | `/balances` | Gets net balances for all users |
+| GET    | `/settlements` | Gets simplified transactions to settle debts |
+
+## Postman Collection
+
+For testing the API endpoints, you can use the following Postman collection:
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/collections/your-collection-id)
+
+Or import the collection from the Gist:
+[View on Gist](https://gist.github.com/your-username/your-gist-id)
