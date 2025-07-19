@@ -5,6 +5,7 @@ import
     addExpense,
     getAllExpenses,
     deleteExpense,
+    updateExpense,
     getExpenseById
 } 
 from '../controllers/expenseController.js';
@@ -17,6 +18,7 @@ router.route('/expenses')
 
 router.route('/expenses/:id')
     .delete(deleteExpense)
+    .put(updateExpense)
     .get(getExpenseById); 
 
 export default router;  
