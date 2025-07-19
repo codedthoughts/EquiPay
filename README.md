@@ -9,6 +9,8 @@ A fullstack application designed to help groups of people split expenses fairly 
 - [Project Structure](#project-structure)
 - [Setup and Installation](#setup-and-installation)
 - [API Documentation](#api-documentation)
+- [Settlement Algorithm](#settlement-algorithm)
+- [Known Limitations & Assumptions](#known-limitations--assumptions)
 
 ## 🌟 Live Demo
 
@@ -129,6 +131,35 @@ equipay-dev-dynamics/
    ```
    App will be available at `http://localhost:5173`
 
+## 🔄 Settlement Algorithm
+
+EquiPay uses an efficient algorithm to calculate and settle expenses with the minimum number of transactions. Here's how it works:
+
+### Step 1: Calculate Net Balances
+1. The system iterates through all expenses in the database
+2. For each expense:
+   - Credits the user who paid (`paid_by`) with the full expense amount
+   - Debits each participant for their specific share (`amountOwed`)
+3. This results in a final net balance for every user:
+   - Positive balance: User is a creditor (paid more than they owed)
+   - Negative balance: User is a debtor (owed more than they paid)
+
+### Step 2: Simplify Transactions
+1. Users are separated into two lists:
+   - Creditors (positive balances)
+   - Debtors (negative balances)
+2. While there are both debtors and creditors:
+   - Take the first debtor and first creditor
+   - Calculate the settlement amount as the minimum of:
+     - Creditor's positive balance
+     - Absolute value of debtor's negative balance
+   - Create a transaction (e.g., "Person A pays Person B $X")
+   - Update both balances by the settlement amount
+   - If a user's balance becomes zero, remove them from their list
+3. The process continues until all debts are settled with the minimum number of transactions
+
+This algorithm ensures that the number of transactions is minimized, making it efficient for groups of any size.
+
 ## 📚 API Documentation
 
 Base URL: `https://equipay-production.up.railway.app/api`
@@ -192,10 +223,37 @@ GET /settlements
 
 
 
+## ⚠️ Known Limitations & Assumptions
+
+### Single Group
+- The current implementation assumes a single, global group of users
+- All expenses are added to one shared pool
+- *Future Enhancement*: Add a Group model to separate expenses (e.g., "Roommates," "Trip to Goa")
+
+### Currency
+- Supports only a single default currency (INR)
+- No multi-currency support implemented
+- All monetary values are treated in the same currency unit
+
+### Authentication
+- Users are identified by unique names only
+- No login system or authentication implemented
+- Anyone can add expenses on behalf of others
+
+### Technical Considerations
+- Uses JavaScript's native floating-point arithmetic
+- Values are rounded to 2 decimal places for display
+- For financial applications requiring absolute precision, consider using `Decimal.js`
+
+### Feature Limitations
+- Supports adding and deleting expenses
+- Editing existing expenses is not implemented
+- No transaction history or audit logging
+- No receipt/image attachment support
+
 ## 🔗 Useful Links
 
 - [Frontend Repository](https://github.com/username/equipay-frontend)
 - [Backend Repository](https://github.com/username/equipay-backend)
-
 
 - Built with ❤️ by [Sarthak](https://github.com/codedthoughts)
