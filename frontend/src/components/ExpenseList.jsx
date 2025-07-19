@@ -1,7 +1,7 @@
 import React from 'react';
 
-// Receive the onEdit prop from App.jsx
-const ExpenseList = ({ expenses, loading, error, onEdit }) => {
+// Receive the onEdit and onDelete props from App.jsx
+const ExpenseList = ({ expenses, loading, error, onEdit, onDelete }) => {
     if (loading) return <p>Loading expenses...</p>;
     if (error) return <p className="error-message">Error: {error}</p>;
 
@@ -21,9 +21,21 @@ const ExpenseList = ({ expenses, loading, error, onEdit }) => {
                                     <small>Paid by {exp.paid_by.name} on {new Date(exp.date).toLocaleDateString()}</small>
                                 </div>
                             </div>
-                            <button className="edit-btn" onClick={() => onEdit(exp)}>
-                                Edit
-                            </button>
+                            <div className="expense-actions">
+                                <button className="edit-btn" onClick={() => onEdit(exp)}>
+                                    Edit
+                                </button>
+                                <button 
+                                    className="delete-btn" 
+                                    onClick={() => {
+                                        if (window.confirm('Are you sure you want to delete this expense?')) {
+                                            onDelete(exp._id);
+                                        }
+                                    }}
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </li>
                     ))}
                 </ul>

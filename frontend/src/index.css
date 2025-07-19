@@ -114,8 +114,9 @@ li:last-child {
 .negative span { color: var(--red); font-weight: bold; }
 
 .expense-list li {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .expense-item-header {
@@ -130,13 +131,6 @@ li:last-child {
     color: #888;
     font-size: 0.85rem;
     margin-top: 0.25rem;
-}
-
-.expense-list li {
-    /* Modify existing rule to have space for the button */
-    flex-direction: row; /* Change from column to row */
-    justify-content: space-between;
-    align-items: center;
 }
 
 .expense-details {
@@ -158,6 +152,36 @@ li:last-child {
 .edit-btn:hover {
     background: #6c757d;
     color: white;
+}
+
+.expense-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 10px;
+}
+
+.delete-btn {
+    background: transparent;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.delete-btn:hover {
+    background: #dc3545;
+    color: white;
+}
+
+.expense-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
 }
 
 .error-message { color: var(--red); }

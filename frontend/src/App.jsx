@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchExpenses, fetchBalances, fetchSettlements } from './services/api';
+import { fetchExpenses, fetchBalances, fetchSettlements, deleteExpense } from './services/api';
 import ExpenseForm from './components/ExpenseForm';
 import BalanceSummary from './components/BalanceSummary';
 import SettlementSummary from './components/SettlementSummary';
@@ -28,6 +28,15 @@ function App() {
         setIsModalOpen(false);
         setEditingExpense(null); 
         refreshData();
+    };
+
+    const handleDeleteExpense = async (expenseId) => {
+        try {
+            await deleteExpense(expenseId);
+            refreshData();
+        } catch (error) {
+            setError(error.message);
+        }
     };
 
     const refreshData = async () => {
@@ -85,6 +94,7 @@ function App() {
                             loading={loading} 
                             error={error} 
                             onEdit={handleOpenEditModal}
+                            onDelete={handleDeleteExpense}
                         />
                     </div>
                 </div>
