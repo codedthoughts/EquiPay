@@ -1,8 +1,10 @@
-import { useState } from 'react';
-import { addExpense } from '../services/api';
+import { useState, useEffect } from 'react';
+import { addExpense, updateExpense } from '../services/api';
 import './ExpenseForm.css';
 
-const ExpenseForm = ({ onClose, onExpenseAdded }) => {
+const ExpenseForm = ({ onClose, onComplete, existingExpense }) => {
+    const isEditMode = Boolean(existingExpense);
+
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const [paidBy, setPaidBy] = useState('');
@@ -11,6 +13,25 @@ const ExpenseForm = ({ onClose, onExpenseAdded }) => {
     const [splits, setSplits] = useState([{ name: '', value: '' }]);
     const [error, setError] = useState(null);
     const [submitting, setSubmitting] = useState(false);
+
+    // Pre-fill form if in edit mode
+    useEffect(() => {
+        if (isEditMode && existingExpense) {
+            setDescription(existingExpense.description);
+            setAmount(existingExpense.amount.toString());
+            setPaidBy(existingExpense.paid_by.name);
+            setSplitMethod(existingExpense.split_method);
+
+            if (existingExpense.split_method === 'EQUAL') {
+                setParticipants(existingExpense.splits.map(s => s.user.name).join(', '));
+            } else {
+                setSplits(existingExpense.splits.map(s => ({
+                    name: s.user.name,
+                    value: (existingExpense.split_method === 'EXACT' ? s.amountOwed : (s.amountOwed / existingExpense.amount * 100)).toString()
+                })));
+            }
+        }
+    }, [existingExpense, isEditMode]);
 
     const handleSplitChange = (index, field, value) => {
         const newSplits = [...splits];
@@ -64,11 +85,14 @@ const ExpenseForm = ({ onClose, onExpenseAdded }) => {
             }
 
             setSubmitting(true);
-            await addExpense(expenseData);
-            onExpenseAdded();
-
+            if (isEditMode) {
+                await updateExpense(existingExpense._id, expenseData);
+            } else {
+                await addExpense(expenseData);
+            }
+            onComplete();
         } catch (err) {
-            setError(err.message);
+            setError(err.message || 'An unknown error occurred.');
         } finally {
             setSubmitting(false);
         }
@@ -78,7 +102,7 @@ const ExpenseForm = ({ onClose, onExpenseAdded }) => {
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <form onSubmit={handleSubmit}>
-                    <h2>Add New Expense</h2>
+                    <h2>{isEditMode ? 'Edit Expense' : 'Add New Expense'}</h2>
                     
                     <div className="form-group">
                         <input type="text" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} required />
@@ -119,7 +143,7 @@ const ExpenseForm = ({ onClose, onExpenseAdded }) => {
                     <div className="form-actions">
                         <button type="button" className="cancel-btn" onClick={onClose} disabled={submitting}>Cancel</button>
                         <button type="submit" className="submit-btn" disabled={submitting}>
-                            {submitting ? 'Adding...' : 'Add Expense'}
+                            {submitting ? 'Saving...' : (isEditMode ? 'Save Changes' : 'Add Expense')}
                         </button>
                     </div>
                 </form>

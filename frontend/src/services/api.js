@@ -35,3 +35,21 @@ export const addExpense = async (expenseData) => {
     });
     return handleResponse(response);
 };
+
+export const updateExpense = async (id, expenseData) => {
+    const response = await fetch(`${API_BASE_URL}/expenses/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(expenseData),
+    });
+    return handleResponse(response);
+};
+
+export const deleteExpense = async (id) => {
+    const response = await fetch(`${API_BASE_URL}/expenses/${id}`, {
+        method: 'DELETE',
+    });
+    return handleResponse(response);
+};

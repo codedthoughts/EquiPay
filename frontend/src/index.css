@@ -132,6 +132,34 @@ li:last-child {
     margin-top: 0.25rem;
 }
 
+.expense-list li {
+    /* Modify existing rule to have space for the button */
+    flex-direction: row; /* Change from column to row */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expense-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-btn {
+    background: transparent;
+    border: 1px solid #6c757d;
+    color: #6c757d;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.edit-btn:hover {
+    background: #6c757d;
+    color: white;
+}
+
 .error-message { color: var(--red); }
 .success-message { color: var(--green); }
 

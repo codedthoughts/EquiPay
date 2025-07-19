@@ -12,6 +12,23 @@ function App() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingExpense, setEditingExpense] = useState(null); 
+
+    const handleOpenAddModal = () => {
+        setEditingExpense(null); 
+        setIsModalOpen(true);
+    };
+
+    const handleOpenEditModal = (expense) => {
+        setEditingExpense(expense); 
+        setIsModalOpen(true);
+    };
+
+    const handleOperationComplete = () => {
+        setIsModalOpen(false);
+        setEditingExpense(null); 
+        refreshData();
+    };
 
     const refreshData = async () => {
         try {
@@ -43,7 +60,7 @@ function App() {
         <div className="app-container">
             <header>
                 <h1>Expense Splitter</h1>
-                <button className="add-expense-btn" onClick={() => setIsModalOpen(true)}>
+                <button className="add-expense-btn" onClick={handleOpenAddModal}>
                     + Add Expense
                 </button>
             </header>
@@ -51,10 +68,8 @@ function App() {
             {isModalOpen && (
                 <ExpenseForm
                     onClose={() => setIsModalOpen(false)}
-                    onExpenseAdded={() => {
-                        setIsModalOpen(false);
-                        refreshData();
-                    }}
+                    onComplete={handleOperationComplete}
+                    existingExpense={editingExpense}
                 />
             )}
 
@@ -65,7 +80,12 @@ function App() {
                         <SettlementSummary settlements={settlements} />
                     </div>
                     <div className="right-panel">
-                        <ExpenseList expenses={expenses} loading={loading} error={error} />
+                        <ExpenseList 
+                            expenses={expenses} 
+                            loading={loading} 
+                            error={error} 
+                            onEdit={handleOpenEditModal}
+                        />
                     </div>
                 </div>
             </main>
