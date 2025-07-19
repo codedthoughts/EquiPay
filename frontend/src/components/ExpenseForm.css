@@ -1,0 +1,121 @@
+/* src/components/ExpenseForm.css */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 500px;
+    animation: slide-down 0.3s ease-out;
+}
+
+@keyframes slide-down {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.form-group { margin-bottom: 1rem; }
+.form-group-inline { display: flex; gap: 1rem; }
+.form-group-inline > * { flex: 1; }
+
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.split-method-selector {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--bg-color);
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.split-method-selector button {
+    background: transparent;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.split-method-selector button.active {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.splits-container { display: flex; flex-direction: column; gap: 0.5rem; }
+.split-row { display: flex; align-items: center; gap: 0.5rem; }
+.split-row input:first-of-type { flex: 2; }
+.split-row input:last-of-type { flex: 1; }
+
+.remove-row-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.add-row-btn {
+    margin-top: 0.5rem;
+    background: transparent;
+    border: 1px dashed var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.add-row-btn:hover { background: var(--primary-color); color: white; }
+
+.form-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem; }
+.form-actions button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: bold;
+}
+.form-actions .cancel-btn { background-color: #6c757d; color: white; }
+.form-actions .cancel-btn:hover { background-color: #5a6268; }
+.form-actions .submit-btn { background-color: var(--primary-color); color: white; }
+.form-actions .submit-btn:disabled { background-color: #b0b0b0; cursor: not-allowed; }
+.form-actions .submit-btn:hover:not(:disabled) { background-color: var(--primary-hover); }

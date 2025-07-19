@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-
 import { fetchExpenses, fetchBalances, fetchSettlements } from './services/api';
-
 import ExpenseForm from './components/ExpenseForm';
 import BalanceSummary from './components/BalanceSummary';
 import SettlementSummary from './components/SettlementSummary';
@@ -13,6 +11,7 @@ function App() {
     const [settlements, setSettlements] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const refreshData = async () => {
         try {
@@ -28,11 +27,14 @@ function App() {
             setError(null);
         } catch (err) {
             setError(err.message);
+            setExpenses([]);
+            setBalances([]);
+            setSettlements([]);
         } finally {
             setLoading(false);
         }
     };
-    
+
     useEffect(() => {
         refreshData();
     }, []);
@@ -41,11 +43,24 @@ function App() {
         <div className="app-container">
             <header>
                 <h1>Expense Splitter</h1>
+                <button className="add-expense-btn" onClick={() => setIsModalOpen(true)}>
+                    + Add Expense
+                </button>
             </header>
+
+            {isModalOpen && (
+                <ExpenseForm
+                    onClose={() => setIsModalOpen(false)}
+                    onExpenseAdded={() => {
+                        setIsModalOpen(false);
+                        refreshData();
+                    }}
+                />
+            )}
+
             <main>
                 <div className="main-content">
                     <div className="left-panel">
-                        <ExpenseForm onExpenseAdded={refreshData} />
                         <BalanceSummary balances={balances} />
                         <SettlementSummary settlements={settlements} />
                     </div>

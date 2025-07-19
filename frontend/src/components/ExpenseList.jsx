@@ -1,13 +1,13 @@
 import React from 'react';
 
 const ExpenseList = ({ expenses, loading, error }) => {
-    if (loading) return <p>Loading expenses...</p>;
-    if (error) return <p className="error-message">Error: {error}</p>;
+    if (loading) return <div className="card full-height"><p>Loading expenses...</p></div>;
+    if (error) return <div className="card full-height"><p className="error-message">Error fetching data: {error}</p></div>;
 
     return (
         <div className="card full-height">
             <h2>Expense History</h2>
-            {expenses.length > 0 ? (
+            {expenses && expenses.length > 0 ? (
                 <ul className="expense-list">
                     {expenses.map((exp) => (
                         <li key={exp._id}>
@@ -22,7 +22,7 @@ const ExpenseList = ({ expenses, loading, error }) => {
                     ))}
                 </ul>
             ) : (
-                <p>No expenses recorded yet.</p>
+                <p>No expenses recorded yet. Click "+ Add Expense" to start.</p>
             )}
         </div>
     );
