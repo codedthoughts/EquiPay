@@ -14,7 +14,7 @@ A fullstack application designed to help groups of people split expenses fairly 
 
 ## 🌟 Live Demo
 
-- **Frontend Application**: [https://equi-36h03n4rh-saarthaks-projects-9c9bdb2b.vercel.app/](https://equi-36h03n4rh-saarthaks-projects-9c9bdb2b.vercel.app/)
+- **Frontend Application**: [https://equi-pay-six.vercel.app/](https://equi-pay-six.vercel.app/)
 - **Backend API**: [https://equipay-production.up.railway.app/api](https://equipay-production.up.railway.app/api)
 - Gist Link : [Link](https://gist.github.com/codedthoughts/a509a39ba1c4f38be901c11458044c00)
 - Postman Collection : [Link](https://techwaala-4837.postman.co/workspace/Team-Workspace~da579eb9-09b1-42dd-80ba-db1b8d167399/collection/42342101-2eb0e9fe-0739-4fe7-8450-d2155005e3ae?action=share&creator=42342101)
