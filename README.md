@@ -1,6 +1,6 @@
-# Split App - Expense Splitting Application
+# EquiPay - Expense Splitting Application
 
-A fullstack application designed to help groups of people split expenses fairly and calculate settlements. This project was built to handle common scenarios like splitting dinner costs, utility bills, or travel expenses.
+A fullstack application designed to help groups of people split expenses fairly and calculate settlements. This project handles common scenarios like splitting dinner costs, utility bills, or travel expenses with multiple participants.
 
 ## Table of Contents
 - [Live Demo](#live-demo)
@@ -8,122 +8,194 @@ A fullstack application designed to help groups of people split expenses fairly 
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Setup and Installation](#setup-and-installation)
-- [API Endpoints](#api-endpoints)
-- [Postman Collection](#postman-collection)
+- [API Documentation](#api-documentation)
 
-## Live Demo
+## 🌟 Live Demo
 
-- **Frontend Application**: [https://equipay-production.up.railway.app](https://equipay-production.up.railway.app)
+- **Frontend Application**: [https://equi-36h03n4rh-saarthaks-projects-9c9bdb2b.vercel.app/](https://equi-36h03n4rh-saarthaks-projects-9c9bdb2b.vercel.app/)
 - **Backend API**: [https://equipay-production.up.railway.app/api](https://equipay-production.up.railway.app/api)
 
-## Features
+## ✨ Features
 
-- **User Management**: Users are automatically created when mentioned in an expense
-- **Expense Tracking**: Add, view, and delete expenses with complete details
-- **Flexible Splitting Options**:
-  - **Equal**: Split the cost equally among all participants
-  - **Exact**: Specify the exact amount each person owes
-  - **Percentage**: Split the cost based on custom percentages
-- **Real-time Balance Calculation**: View who owes money and who is owed money
-- **Simplified Settlements**: Calculates minimum transactions to settle all debts
-- **Data Validation**: Robust backend validation with clear error messages
+- **User Management**: Automatic user creation when mentioned in expenses
+- **Expense Tracking**: Comprehensive expense management
+- **Flexible Splitting**:
+  - ✅ **Equal Split**: Divide costs equally
+  - 💰 **Exact Amounts**: Specify exact shares
+  - 📊 **Percentage Split**: Allocate by percentages
+- **Balance Tracking**: Real-time who-owes-what
+- **Smart Settlements**: Minimal transactions to clear all debts
+- **Data Validation**: Robust input validation
 
-## Tech Stack
+## 🛠 Tech Stack
 
 ### Backend
-- **Runtime**: Node.js
+- **Runtime**: Node.js 18+
 - **Framework**: Express.js
-- **Database**: MongoDB (with Mongoose ODM)
-- **Language**: JavaScript (ES Modules)
+- **Database**: MongoDB Atlas
+- **ODM**: Mongoose
 
 ### Frontend
-- **Library**: React (with Vite)
-- **Styling**: CSS3
-- **Language**: JavaScript (JSX)
+- **Framework**: React 18
+- **Build Tool**: Vite
+- **Styling**: CSS3 with CSS Variables
+- **State Management**: React Hooks
 
-### Deployment & Tooling
-- **Backend Hosting**: Render.com
-- **Frontend Hosting**: Vercel / Netlify / Render.com
-- **API Testing**: Postman
+### Deployment
+- **Frontend**: Vercel
+- **Backend**: Railway
+- **Database**: MongoDB Atlas
 
-## Project Structure
+## 📁 Project Structure
 
 ```
-/split-app-assignment/
-|
-|-- /backend/
-|   |-- /controllers/     # Business logic for routes
-|   |-- /models/          # Mongoose data schemas (User, Expense)
-|   |-- /routes/          # API route definitions
-|   |-- .env              # Environment variables
-|   |-- index.js          # Main server entry point
-|   |-- package.json
-|
-|-- /frontend/
-|   |-- /src/
-|   |   |-- /components/  # Reusable React components
-|   |   |-- /services/    # API communication logic
-|   |   |-- App.jsx       # Main application component
-|   |   |-- index.css     # Global styles
-|   |-- package.json
-|
-|-- README.md
+equipay-dev-dynamics/
+│
+├── backend/
+│   ├── config/         # Configuration files
+│   ├── controllers/    # Route controllers
+│   ├── middleware/     # Custom middleware
+│   ├── models/         # MongoDB schemas
+│   ├── routes/         # API routes
+│   ├── utils/          # Helper functions
+│   ├── .env            # Environment variables
+│   ├── index.js        # Entry point
+│   └── package.json
+│
+└── frontend/
+    ├── public/         # Static files
+    └── src/
+        ├── assets/     # Images, fonts, etc.
+        ├── components/ # Reusable components
+        ├── services/   # API services
+        ├── App.jsx     # Root component
+        ├── main.jsx    # Entry point
+        └── index.css   # Global styles
 ```
 
-## Setup and Installation
+## 🚀 Setup and Installation
 
-### 1. Backend Setup
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- MongoDB Atlas account
 
-1. Navigate to the backend directory and install dependencies:
+### Backend Setup
+
+1. Clone the repository:
    ```bash
-   cd backend
+   git clone https://github.com/username/equipay-dev-dynamics.git
+   cd equipay-dev-dynamics/backend
+   ```
+
+2. Install dependencies:
+   ```bash
    npm install
    ```
 
-2. Create a `.env` file in the backend directory:
+3. Configure environment variables:
    ```env
    PORT=3001
-   MONGO_URI=mongodb+srv://<user>:<password>@your-cluster-url...
+   MONGO_URI=your_mongodb_connection_string
+   NODE_ENV=development
    ```
-   > Replace `MONGO_URI` with your MongoDB Atlas connection string.
 
-3. Start the development server:
+4. Start the development server:
    ```bash
    npm run dev
    ```
-   The backend API will be available at `http://localhost:3001`
+   API will be available at `http://localhost:3001`
 
-### 2. Frontend Setup
+### Frontend Setup
 
-1. Navigate to the frontend directory and install dependencies:
+1. Navigate to frontend directory:
    ```bash
-   cd frontend
+   cd ../frontend
+   ```
+
+2. Install dependencies:
+   ```bash
    npm install
    ```
 
-2. Start the development server:
+3. Configure environment variables:
+   ```env
+   VITE_API_URL=http://localhost:3001/api
+   ```
+
+4. Start the development server:
    ```bash
    npm run dev
    ```
-   The frontend will be available at `http://localhost:5173`
+   App will be available at `http://localhost:5173`
 
-## API Endpoints
+## 📚 API Documentation
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST   | `/users` | Creates a new user |
-| GET    | `/users` | Retrieves all users |
-| POST   | `/expenses` | Adds a new expense |
-| GET    | `/expenses` | Retrieves all expenses |
-| DELETE | `/expenses/:id` | Deletes a specific expense |
-| GET    | `/balances` | Gets net balances for all users |
-| GET    | `/settlements` | Gets simplified transactions to settle debts |
+Base URL: `https://equipay-production.up.railway.app/api`
 
-## Postman Collection
+### Users
 
-For testing the API endpoints, you can use the following Postman collection:
+#### Create User
+```http
+POST /users
+Content-Type: application/json
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/collections/your-collection-id)
+{
+  "name": "John Doe"
+}
+```
 
-Or import the collection from the Gist:
-[View on Gist](https://gist.github.com/your-username/your-gist-id)
+#### List All Users
+```http
+GET /users
+```
+
+### Expenses
+
+#### Create Expense
+```http
+POST /expenses
+Content-Type: application/json
+
+{
+  "description": "Dinner",
+  "amount": 1000,
+  "paid_by_name": "John",
+  "split_method": "EQUAL",
+  "participants": ["John", "Alice", "Bob"]
+}
+```
+
+#### List All Expenses
+```http
+GET /expenses
+```
+
+#### Delete Expense
+```http
+DELETE /expenses/:id
+```
+
+### Balances
+
+#### Get All Balances
+```http
+GET /balances
+```
+
+### Settlements
+
+#### Get Settlement Transactions
+```http
+GET /settlements
+```
+
+
+
+## 🔗 Useful Links
+
+- [Frontend Repository](https://github.com/username/equipay-frontend)
+- [Backend Repository](https://github.com/username/equipay-backend)
+
+
+- Built with ❤️ by [Sarthak](https://github.com/codedthoughts)
